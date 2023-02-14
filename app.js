@@ -9,7 +9,7 @@ app.use('/', usersRouter);
 
 app.use('/', cardsRouter);
 
-app.get('*', (req, res) => {
+app.use('*', (req, res) => {
   res.status(404).json({ message: 'Requested resource not found' });
 });
 

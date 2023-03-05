@@ -4,7 +4,8 @@ const {
   getUserById,
   createUser,
   updateProfile,
-  updateProfileAvatar } = require('../controllers/users');
+  updateProfileAvatar,
+} = require('../controllers/users');
 
 const usersRouter = express.Router();
 

@@ -17,12 +17,12 @@ const userSchema = mongoose.Schema({
     type: String,
     required: [true, 'Avatar required'],
     validate: {
-      validator: function (v) {
-        return /^(http[s]?:\/\/[www]?)[a-zA-Z0-9-\.\_\~\:\/\?\%\#\[\]\@\!\$\&\'\(\)\*\+\,\;\=]+\.[a-zA-Z]+\/?[a-zA-Z0-9-\.\_\~\:\/\?\%\#\[\]\@\!\$\&\'\(\)\*\+\,\;\=]*$/i.test(v);
+      validator(v) {
+        return /^(http[s]?:\/\/[www]?)[a-zA-Z0-9-._~:/?%#[\]@!$&'()*+,;=]+\.[a-zA-Z]+\/?[a-zA-Z0-9-._~:/?%#[\]@!$&'()*+,;=]*$/i.test(v);
       },
-      message: props => `${props.value} is not a valid URL`
-    }
+      message: (props) => `${props.value} is not a valid URL`,
+    },
   },
-})
+});
 
 module.exports = mongoose.model('user', userSchema);

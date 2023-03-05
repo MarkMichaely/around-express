@@ -11,16 +11,16 @@ const cardSchema = mongoose.Schema({
     type: String,
     required: [true, 'Picture required'],
     validate: {
-      validator: function (v) {
-        return /^(http[s]?:\/\/[www]?)[a-zA-Z0-9-\.\_\~\:\/\?\%\#\[\]\@\!\$\&\'\(\)\*\+\,\;\=]+\.[a-zA-Z]+\/?[a-zA-Z0-9-\.\_\~\:\/\?\%\#\[\]\@\!\$\&\'\(\)\*\+\,\;\=]*$/i.test(v);
+      validator(v) {
+        return /^(http[s]?:\/\/[www]?)[a-zA-Z0-9-._~:/?%#[\]@!$&'()*+,;=]+\.[a-zA-Z]+\/?[a-zA-Z0-9-._~:/?%#[\]@!$&'()*+,;=]*$/i.test(v);
       },
-      message: props => `${props.value} is not a valid URL`
-    }
+      message: (props) => `${props.value} is not a valid URL`,
+    },
   },
   owner: {
     type: mongoose.Schema.Types.ObjectId,
     required: [true, 'User required'],
-    ref: 'user'
+    ref: 'user',
   },
   likes: [{
     type: mongoose.Schema.Types.ObjectId,
@@ -29,9 +29,8 @@ const cardSchema = mongoose.Schema({
   createdAt: {
     type: Date,
     default: Date.now(),
-  }
+  },
 
-
-})
+});
 
 module.exports = mongoose.model('card', cardSchema);

@@ -1,8 +1,9 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
 const cardsRouter = require('./routes/cards');
 const usersRouter = require('./routes/users');
-const bodyParser = require('body-parser');
+
 const app = express();
 
 const { PORT = 3000 } = process.env;
@@ -12,7 +13,7 @@ const jsonParser = bodyParser.json();
 mongoose.connect('mongodb://localhost:27017/aroundb');
 app.use((req, res, next) => {
   req.user = {
-    _id: '64035c3ec61732d53d055169'
+    _id: '64035c3ec61732d53d055169',
   };
 
   next();

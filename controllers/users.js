@@ -29,7 +29,7 @@ const createUser = (req, res) => {
     .then((user) => res.send(user))
     .catch((err) => {
       if (err.name === 'ValidationError') res.status(400).send({ message: 'Wrong data for user' });
-      res.status(500).send({ message: 'An error has occured on the server' });
+      else res.status(500).send({ message: 'An error has occured on the server' });
     });
 };
 

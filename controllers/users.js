@@ -1,6 +1,3 @@
-const path = require('path');
-const dataPath = path.join(__dirname, '..', 'data', 'users.json');
-const { getDataFromFile } = require('../utils/files');
 const User = require('../models/user');
 
 const getUsers = (req, res) => {
@@ -35,7 +32,39 @@ const createUser = (req, res) => {
     .then(user =>
       res.send(user)
     )
-    .catch(() => res.status(500).send({ message: 'An error has occured on the server' }));
+    .catch((err) => {
+      if (err.name === 'ValidationError')
+        res.status(400).send({ message: 'Wrong data for user' })
+      res.status(500).send({ message: 'An error has occured on the server' })
+    });
 };
 
-module.exports = { getUsers, getUserById, createUser };
+const updateProfile = (req, res) => {
+  const { name, about } = req.body;
+  if (!name || !about) res.status(204).send({ message: 'insuffiecnt data for change' });
+  User.findByIdAndUpdate(req.user._id, { name, about }, { new: true, runValidators: true })
+    .then(user =>
+      res.send(user)
+    )
+    .catch((err) => {
+      if (err.name === 'ValidationError')
+        res.status(400).send({ message: 'Wrong data for user' })
+      res.status(500).send({ message: 'An error has occured on the server' })
+    });
+};
+
+const updateProfileAvatar = (req, res) => {
+  const { avatar } = req.body;
+  if (!avatar) res.status(204).send({ message: 'No link provided' });
+  User.findByIdAndUpdate(req.user._id, { avatar }, { new: true, runValidators: true })
+    .then(user =>
+      res.send(user)
+    )
+    .catch((err) => {
+      if (err.name === 'ValidationError')
+        res.status(400).send({ message: 'Wrong data for user' })
+      else
+        res.status(500).send({ message: 'An error has occured on the server' })
+    });
+};
+module.exports = { getUsers, getUserById, createUser, updateProfile, updateProfileAvatar };

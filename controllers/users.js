@@ -47,6 +47,8 @@ const updateProfile = (req, res) => {
     .catch((err) => {
       if (err.name === 'CastError') {
         res.status(BADREQUEST).send({ message: 'Invalid user id' });
+      } else if (err.name === 'ValidationError') {
+        res.status(BADREQUEST).send({ message: 'Invalid user id' });
       } else if (err.statusCode === NOTFOUND) {
         res.status(NOTFOUND).send({ message: err.message });
       } else res.status(SERVERERROR).send({ message: 'An error has occured on the server' });
@@ -65,6 +67,8 @@ const updateProfileAvatar = (req, res) => {
     .then((user) => res.send(user))
     .catch((err) => {
       if (err.name === 'CastError') {
+        res.status(BADREQUEST).send({ message: 'Invalid user id' });
+      } else if (err.name === 'ValidationError') {
         res.status(BADREQUEST).send({ message: 'Invalid user id' });
       } else if (err.statusCode === NOTFOUND) {
         res.status(NOTFOUND).send({ message: err.message });
